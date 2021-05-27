@@ -9,6 +9,10 @@ defmodule Vocial.Votes do
         Repo.all(Poll) |> Repo.preload(:options)
     end
 
+    def list_options do
+      Repo.all(Option) |> Repo.preload(:poll)
+    end
+
     def new_poll do
         Poll.changeset(%Poll{}, %{})
     end
@@ -18,7 +22,7 @@ defmodule Vocial.Votes do
           with {:ok, poll} <- create_poll(poll_attrs),
                {:ok, _options} <- create_options(options, poll)
           do
-            poll
+            poll |> Repo.preload(:options)
           else
             _ -> Repo.rollback("Failed to create poll")
           end

@@ -1,27 +1,16 @@
 defmodule VocialWeb.PollControllerTest do
-    use VocialWeb.ConnCase
-    
-    # test "GET /polls", %{conn: conn} do
-    #     conn = get conn, "/polls"
-    #     assert html_response(conn, 200) =~ "My First Poll"
-    # end
+  use VocialWeb.ConnCase
 
-    test "GET /polls", %{conn: conn} do
-        poll = %{
-          title: "My First Poll",
-          options: [
-            {"Choice 1", 0},
-            {"Choice 2", 5},
-            {"Choice 3", 2}
-          ]
-        }
-     
-        conn = get conn, "/polls"
-        assert html_response(conn, 200) =~ poll.title
-        Enum.each(poll.options, fn {option, votes} ->
-          assert html_response(conn, 200) =~ option
-          assert html_response(conn, 200) =~ "#{votes} votes"
-        end)
-      end
+  test "GET /polls", %{conn: conn} do
+    {:ok, poll} = Vocial.Votes.create_poll_with_options(%{title: "Poll 1"}, ["Choice 1", "Choice 2", "Choice 3"])
+
+    conn = get(conn, "/polls")
+    assert html_response(conn, 200) =~ poll.title
+
+    Enum.each(poll.options, fn option ->
+      assert html_response(conn, 200) =~ "#{option.title}"
+      assert html_response(conn, 200) =~ ": #{option.votes}"
+    end)
+  end
 
 end
