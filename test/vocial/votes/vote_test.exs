@@ -5,7 +5,9 @@ defmodule Vocial.VotesTest do
 
     describe "polls" do
         @valid_attrs %{ title: "Hello" }
-     
+      
+        # Fixtures, in the case of an Ecto application, are just helper functions
+        # that create rows in our database that we can use to verify functionality
         def poll_fixture(attrs \\ %{}) do
           with create_attrs <- Enum.into(attrs, @valid_attrs),
                {:ok, poll} <- Votes.create_poll(create_attrs),
@@ -22,6 +24,8 @@ defmodule Vocial.VotesTest do
 
         test "new_poll/0 returns a new blank changeset" do
             changeset = Votes.new_poll()
+            # __struct__ is a special property built into Elixir structs that tell you which module they map to,
+            #  so since we're just verifying that it creates a new changeset
             assert changeset.__struct__ == Ecto.Changeset
         end
     
