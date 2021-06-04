@@ -1,5 +1,7 @@
 defmodule Vocial.Repo do
-  use Ecto.Repo, otp_app: :vocial
+  use Ecto.Repo,
+      otp_app: :vocial,
+      adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the
