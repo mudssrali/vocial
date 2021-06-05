@@ -1,0 +1,31 @@
+# Version of docker-compose
+version: '3.1'
+
+# Containers we are going to run
+services:
+  # Our Phoenix container
+  web:
+    image: vocial
+    environment:
+      # Variables to connect to our Postgres server
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: vocial_dev
+      DB_PORT: 5432
+      # Hostname of our Postgres container
+      DB_HOST: database
+    ports:
+      # Mapping the port to make the Phoenix app accessible outside of the container
+      - "4000:4000"
+    depends_on:
+      # The db container needs to be started before we start this container
+      - database
+  database:
+    # We use the predefined Postgres image
+    image: postgres:10.5
+    # restart: always
+    environment:
+      # Set user/password for Postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vocial_dev

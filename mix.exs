@@ -43,8 +43,8 @@ defmodule Vocial.Mixfile do
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:poison, "~> 4.0.1"},
+      {:jason, "~> 1.2.2"},
+      {:poison, "~> 3.1.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
@@ -59,7 +59,6 @@ defmodule Vocial.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

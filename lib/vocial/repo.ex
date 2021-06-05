@@ -7,7 +7,19 @@ defmodule Vocial.Repo do
   Dynamically loads the repository url from the
   DATABASE_URL environment variable.
   """
-  def init(_, opts) do
-    {:ok, Keyword.put(opts, :url, System.get_env("DATABASE_URL"))}
+  def init(_, config) do
+
+    IO.inspect System.get_env("DB_HOST")
+
+      config = config
+        |> Keyword.put(:username, System.get_env("DB_USER") || "postgres")
+        |> Keyword.put(:password, System.get_env("DB_PASSWORD") || "postgres")
+        |> Keyword.put(:database, System.get_env("DB_NAME") || "vocial_dev")
+        |> Keyword.put(:hostname, System.get_env("DB_HOST") || "localhost")
+        |> Keyword.put(:port, (System.get_env("DB_PORT") || "5432") |> String.to_integer)
+
+      IO.inspect config
+      
+      {:ok, config} 
   end
 end

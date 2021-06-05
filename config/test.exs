@@ -16,4 +16,5 @@ config :vocial, Vocial.Repo,
   password: "postgres",
   database: "vocial_test",
   hostname: "localhost",
+  port: 5432
   pool: Ecto.Adapters.SQL.Sandbox
